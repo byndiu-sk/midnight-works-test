@@ -7,6 +7,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class Inventory : MonoBehaviour
 {
     //0 = primary, 1 = secondarym, 2 = melle
+    [SerializeField]
     private Weapon[] weapons;
 
     private void Start()

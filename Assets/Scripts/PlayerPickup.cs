@@ -10,22 +10,27 @@ public class PlayerPickup : MonoBehaviour
     private LayerMask pickupLayer;
 
     private Camera cam;
+    private Inventory inventory;
 
-    private void Start()
+    private void Awake()
     {
         cam = Camera.main;
+        inventory = GetComponent<Inventory>();
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
             RaycastHit hit;
 
             {
                 if (Physics.Raycast(ray, out hit, pickupRange, pickupLayer))
                 {
                     Debug.Log("Hit: " + hit.transform.name);
+                    Weapon newItem = hit.transform.GetComponent<ItemObject>().item as Weapon;
+                    inventory.AddItem(newItem);
+                    Destroy(hit.transform.gameObject);
                 }
             }
         }
