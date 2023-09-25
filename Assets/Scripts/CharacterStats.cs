@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public event EventHandler<float> OnHealthChanged;
+
     [SerializeField]
-    protected int health;
+    protected float health;
     [SerializeField]
-    protected int maxHealth;
+    protected float maxHealth;
 
     [SerializeField]
     protected bool isDead;
@@ -21,34 +24,37 @@ public class CharacterStats : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            isDead = true;
+            Die();
         }
         if (health >= maxHealth)
         {
             health = maxHealth;
         }
+
+        OnHealthChanged?.Invoke(this, health);
     }
 
     public virtual void Die()
     {
         isDead = true;
+        Destroy(gameObject);
     }
 
-    protected void SetHealth(int healthToSet)
+    protected void SetHealth(float healthToSet)
     {
         health = healthToSet;
         CheckHelth();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        int healthAfterDamage = health - damage;
+        float healthAfterDamage = health - damage;
         SetHealth(healthAfterDamage);
     }
 
     public void Heal(int heal)
     {
-        int healthAfterHeal = health + heal;
+        float healthAfterHeal = health + heal;
         SetHealth(healthAfterHeal);
     }
 
@@ -57,5 +63,15 @@ public class CharacterStats : MonoBehaviour
         maxHealth = 100;
         SetHealth(maxHealth);
         isDead = false;
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 }
