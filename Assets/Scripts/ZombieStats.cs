@@ -5,9 +5,9 @@ using UnityEngine;
 public class ZombieStats : CharacterStats
 {
     [SerializeField]
-    private float damage;
+    private int damage;
     [SerializeField]
-    private float atackSpeed;
+    public float atackSpeed;
 
     [SerializeField]
     private bool canAtack;
@@ -17,9 +17,9 @@ public class ZombieStats : CharacterStats
         Init();        
     }
 
-    public void DealDamage()
+    public void DealDamage(CharacterStats statsToDamage)
     {
-
+        statsToDamage.TakeDamage(damage);
     }
 
     public override void Die()
