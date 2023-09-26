@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Die()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameManager.Instance.PlayerLost();
+        ScreenController.Instance.GetScreen<LoseScreen>().Open();
+        base.Die();
     }
 }

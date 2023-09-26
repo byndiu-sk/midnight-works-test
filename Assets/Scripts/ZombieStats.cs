@@ -25,11 +25,14 @@ public class ZombieStats : CharacterStats
     public override void Die()
     {
         base.Die();
+        GameManager.Instance.UnregisterEnemy();
         Destroy(gameObject);
     }
 
     public override void Init()
     {
+        GameManager.Instance.RegisterEnemy();
+
         maxHealth = 25;
         SetHealth(maxHealth);
 
